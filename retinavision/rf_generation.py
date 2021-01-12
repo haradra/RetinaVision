@@ -141,7 +141,7 @@ def rf_ozimek(tessellation, kernel_ratio, sigma_base, sigma_power, mean_rf, min_
     
     dist_5 = np.zeros(length, dtype='float64')
     print(str(chunk) + " nodes in one chunk.")
-    for i in range(num):
+    for i in range(int(num)):
         print("Processing chunk " + str(i))
         d = distance.cdist(tessellation[i*chunk:(i+1)*chunk], tessellation)
         s = np.sort(d)

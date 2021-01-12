@@ -12,7 +12,7 @@ import numpy as np
 from numpy.linalg import norm
 import math
 from scipy.spatial.distance import cdist
-from retinavision.utils import tessplot
+from utils import tessplot
 
     
 def LRsplit(loc):
@@ -87,7 +87,7 @@ def cort_map(L, R, target_d5=1.0, alpha=15, v=False):
         num = length/chunk + np.sign(length%chunk)
         
         dist_5 = np.zeros(length, dtype='float64')
-        for j in range(num):
+        for j in range(int(num)):
             print("Processing chunk " + str(j))
             s = np.sort(cdist( loc[j*chunk : (j+1)*chunk,:2], loc[:,:2]))
             dist_5[j*chunk:(j+1)*chunk] = np.mean(s[:,1:6], 1)

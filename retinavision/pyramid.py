@@ -7,8 +7,8 @@ Retina Pyramids
 @author: Piotr Ozimek
 """
 from os.path import join
-from retinavision.retina import Retina
-from retinavision import datadir, utils
+from retina import Retina
+import datadir, utils
 import cv2
 import numpy as np
 

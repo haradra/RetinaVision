@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: retina
+  namespace: 2162979kproject
+spec:
+  backoffLimit: 0
+  template:        
+    metadata:
+      name: retina
+    spec:
+      containers:
+      - name: retina-container  
+        # uncomment below if fresh pull of the image needed
+        # imagePullPolicy: Always 
+        image: haradra/retina:firsttry
+        # cd into the folder and run the PPO training
+        # /nfs/ is equivalent of 2252756jvol1claim/
+        command: ["/bin/bash","-c","cd /nfs/RetinaVision/ && python retinavision/driver.py"]
+        resources:
+          # start container only if requests are met
+          requests:
+            # 1 physical CPU core = 1000m
+            cpu: "1000m" 
+            memory: "2Gi"
+            nvidia.com/gpu: 1 
+          # kill container if goes beyond the limits
+          limits:
+            cpu: "4000m" 
+            memory: "8Gi"
+            nvidia.com/gpu: 1 
+        # mount the external volume 'nfs-access' at the location /nfs inside this container
+        volumeMounts:
+        - mountPath: /nfs
+          name: nfs-access
+      volumes:
+      - name: nfs-access
+        persistentVolumeClaim: 
+          claimName: 2162979kvol1claim
+      # request specific GPU ("gpu2080ti" or "gputitan")
+      # nodeSelector:
+      #   node-role.ida/gpu2080ti: "true"
+      restartPolicy: Never

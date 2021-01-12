@@ -20,7 +20,7 @@ from numpy.random import uniform as rand
 from time import perf_counter
 from IPython.display import display
 import pickle
-import winsound
+import os
 
 def writePickle(path, obj):
     with open(path, 'wb') as handle:
@@ -94,9 +94,10 @@ def imshow(pic, size=(10,10)):
     plt.show()
 
 def alarm():
-    winsound.Beep(600,400)
-    winsound.Beep(600,400)
-    winsound.Beep(600,400)
+    print("beep")
+    # winsound.Beep(600,400)
+    # winsound.Beep(600,400)
+    # winsound.Beep(600,400)
 
 def SSNN(N, name=None, fps=90, fov=0.1, max_iter=20000, init_alpha=0.1, end_alpha=0.0005, V = False):
     """Self Similar Neural Network algorithm, generating retinal tessellations
@@ -116,8 +117,8 @@ def SSNN(N, name=None, fps=90, fov=0.1, max_iter=20000, init_alpha=0.1, end_alph
     W = np.dstack(pol2cart(r, th))[0]
     
     if V:
-        if name is None: writer = imageio.get_writer('D://RETINA//out//ssnn-{0}.mp4'.format(N), fps=fps)
-        else: writer = imageio.get_writer('D://RETINA//out//{0}.mp4'.format(name), fps=fps)
+        if name is None: writer = imageio.get_writer('{0}/ssnn-{1}.mp4'.format(os.getcwd(), N), fps=fps)
+        else: writer = imageio.get_writer('{0}/{1}.mp4'.format(os.getcwd(), name), fps=fps)
     
     for i in range(max_iter):    
         a = ALPHA[i]
